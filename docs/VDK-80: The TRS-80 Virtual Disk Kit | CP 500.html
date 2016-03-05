@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta charset="utf-8">
+<link rel="shortcut icon" href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/sites/default/files/Favicon.png" type="image/png">
+<meta name="viewport" content="width=device-width">
+<link rel="canonical" href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/3">
+<meta name="Generator" content="Drupal 7 (http://drupal.org)">
+<link rel="shortlink" href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/3">
+<title>VDK-80: The TRS-80 Virtual Disk Kit | CP 500</title>
+<style type="text/css" media="all">@import url("http://www.mdutra.com/modules/system/system.base.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/system/system.menus.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/system/system.messages.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/system/system.theme.css?mm4c4g");</style>
+<style type="text/css" media="all">@import url("http://www.mdutra.com/modules/field/theme/field.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/node/node.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/user/user.css?mm4c4g");
+@import url("../sites/all/modules/views/css/views.css?mm4c4g");</style>
+<style type="text/css" media="all">@import url("../sites/all/modules/ctools/css/ctools.css?mm4c4g");
+@import url("http://www.mdutra.com/modules/locale/locale.css?mm4c4g");</style>
+<style type="text/css" media="all">@import url("../sites/all/themes/professional_theme/style.css?mm4c4g");</style>
+<script type="text/javascript" src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/jquery.html"></script>
+<script type="text/javascript" src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/jquery_002.html"></script>
+<script type="text/javascript" src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/drupal.html"></script>
+<script type="text/javascript" src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/custom.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"professional_theme","theme_token":"09hAz1gtNsTBaLSqdOvbXfEXmKtQIz7AmnyHr7h4yE4","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/themes\/professional_theme\/js\/custom.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"modules\/locale\/locale.css":1,"sites\/all\/themes\/professional_theme\/style.css":1}}});
+//--><!]]>
+</script>
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>try {  for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){    var lastpass_f = document.forms[lastpass_iter];    if(typeof(lastpass_f.lpsubmitorig)=="undefined"){      if (typeof(lastpass_f.submit) == "function") {        lastpass_f.lpsubmitorig = lastpass_f.submit;        lastpass_f.submit = function(){          var form = this;          try {            if (document.documentElement && 'createEvent' in document)            {              var forms = document.getElementsByTagName('form');              for (var i=0 ; i<forms.length ; ++i)                if (forms[i]==form)                {                  var element = document.createElement('lpformsubmitdataelement');                  element.setAttribute('formnum',i);                  element.setAttribute('from','submithook');                  document.documentElement.appendChild(element);                  var evt = document.createEvent('Events');                  evt.initEvent('lpformsubmit',true,false);                  element.dispatchEvent(evt);                  break;                }            }          } catch (e) {}          try {            form.lpsubmitorig();          } catch (e) {}        }      }    }  }} catch (e) {}</script></head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-3 node-type-page i18n-en">
+    
+<div id="wrapper">
+  <header id="header" role="banner">
+    <div id="logo"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/index.html" title="Home"><img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/Logo.png"></a></div>    <h1 id="site-title"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/index.html" title="Home">CP 500</a></h1>
+    <div id="site-description"></div>
+    <div class="clear"></div>
+    <nav id="main-menu" role="navigation">
+      <a class="nav-toggle" href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/3#">Navigation</a>
+      <div class="menu-navigation-container">
+        <ul class="menu"><li class="first leaf"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/1">CP 500</a></li>
+<li class="leaf active-trail"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/3" class="active-trail active">VDK-80</a></li>
+<li class="leaf"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/5">Favorites</a></li>
+<li class="leaf"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/7">About me</a></li>
+<li class="last leaf"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/contact" title="">Contact</a></li>
+</ul>      </div>
+      <div class="clear"></div>
+    </nav><!-- end main-menu -->
+  </header>
+
+  
+  <div id="container">
+
+      
+  
+   
+    <div class="content-sidebar-wrap">
+
+    <div id="content">
+      <div id="breadcrumbs"><h2 class="element-invisible">You are here</h2><nav class="breadcrumb"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/index.html">Home</a> » VDK-80: The TRS-80 Virtual Disk Kit</nav></div>      <section id="post-content" role="main">
+                                <h1 class="page-title">VDK-80: The TRS-80 Virtual Disk Kit</h1>                                        <div class="region region-content">
+  <div id="block-system-main" class="block block-system">
+
+      
+  <div class="content">
+                            
+      
+    
+  <div class="content node-page">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/Floppy1.png" alt="Image" style="float:left; margin-right:5px;">
+
+<p>Many TRS-80 floppy disks have been preserved until these days through
+ data conversion processes which create "disk images". Such images are 
+stored in specially formatted PC files that can be used in emulators to 
+recreate faithful experiences of 30-year-old computers.</p>
+
+<p>In February 2009 I started working on a program which allows the easy
+ management of TRS-80 floppy images at the file level. Almost 4 years 
+later, all I can say is that the code is still under development, but it
+ is already capable of interpreting nearly all operating systems and 
+image formats known for the TRS-80 model I, III and 4.</p>
+
+<p>How would this be useful? In the 1980's there was a considerable 
+number of operating systems available in the market and usually their 
+file systems were incompatible with each other. In some cases, even 
+between succeeding versions of the same operating system. Transferring 
+files among such disks wasn't an easy task. Some people still have 
+documents of personal value in these disks and I thought I could help 
+them recover part of their history.</p>
+
+<h3>What does it do?</h3>
+
+<p>VDK-80 is a command-line Windows program which requires no 
+installation whatsoever. If you are looking for a concise features list,
+ there you go:</p>
+
+<ul>
+<li>Shows the disk directory, the disk name, the files' contents and the disk sectors</li>
+<li>Supports reading, writing, renaming or deleting single files or groups of files</li>
+<li>Supports all known TRS-80 model I/III/4 operating systems, except CP/M</li>
+<li>Supports all known floppy image formats: JV1, JV3 and DMK</li>
+</ul>
+
+<h3>Technicalities</h3>
+
+<p>When I started this project in 2009 I was missing the thrill of the 
+old days, which I think explains some "odd" design choices I made, like 
+writing the software in assembly language with object-orientation to 
+address an unusual problem like reading very old computer disks. My 
+first impulse was to work with real TRS-80 floppies, but then Ira 
+Goldklang convinced me that a software to handle disk images would be of
+ more value.</p>
+
+<p>The code is built in modules, or "classes" in OO jargon. There are 
+two main groups of modules which share the same features: one is the 
+Operating System Interface and the other is the Virtual Disk Interface. 
+The latter is responsible for "decoding" the file format and presenting 
+the data as standard sectors to the upper layer. The former handles how 
+each operating system stores its files and then reassembles the sectors 
+into files when requested by the User Interface.</p>
+
+<p>The picture below ilustrates the relationship between the specialized modules and the program's interfaces:</p>
+
+<a target="_blank" href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/images/vdk80/Diagram.png" title="Click to see a larger image"><img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/Diagram_.png" alt="Image" style="display:block; margin-left:auto; margin-right:auto; margin-bottom:15px;"></a>
+
+<p>The user interface is currently command-line but the final version 
+should have a graphical interface much more friendly. It will be 
+possible exchange files between disks just dragging and dropping them 
+from one window to another, for example.</p>
+
+<h3>How to use it</h3>
+
+<p>In this section I'll show how to perform a variety of operations with
+ the program. In the examples below, I assume that you have placed the 
+VDK-80 executable file in a directory of your computer and that you have
+ added such directory to your <a target="_blank" href="http://www.windows7hacker.com/index.php/2010/05/how-to-addedit-environment-variables-in-windows-7/" title="Click to see how to do this">PATH environment variable</a>, allowing us to run the program from any other directory.</p>
+
+<h4 style="font-weight:bold">Getting help</h4>
+
+<p>The VDK-80 does a good job identifying disk formats and operating 
+systems automatically, but there are times where a tweak may be needed. 
+If you need help remembering which switch does what, just type:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Syntax: V80 [switches] <disk_image> [source_filespec] [target_filespec]
+
+Commands:
+	-l		List directory (default)
+	-r		Read files
+	-w		Write files
+	-n		Rename files
+	-k		Delete files
+	-f		Dump file contents
+	-d		Dump disk contents
+
+Options:
+	-s		Include system files
+	-i		Include invisible files
+	-x		Show extra information
+	-p		Skip the disk parameters check
+	-c		Skip the directory structure check
+	-g		Skip the GAT auto-fix in TRSDOS system disks
+	-b		Read as much as possible from bad files
+	-ss		Force the disk as single-sided
+	-ds		Force the disk as double-sided
+
+Disk Interfaces:
+	-dmk		Force the DMK disk interface
+	-jv1		Force the JV1 disk interface
+	-jv3		Force the JV3 disk interface
+
+DOS Interfaces:
+	-cpm		Force the CP/M system interface (INCOMPLETE)
+	-dd		Force the DoubleDOS system interface
+	-md		Force the MicroDOS/OS-80 III system interface
+	-nd		Force the NewDOS/80 system interface
+	-rd		Force the RapiDOS system interface
+	-td1		Force the TRSDOS Model I system interface
+	-td3		Force the TRSDOS Model III system interface
+	-td4		Force the TRSDOS Model 4 system interface
+</disk_image></pre></div>
+
+<p>The commands have been separated in groups just for the sake of 
+organization, because they can be used in any order in the command-line,
+ either before, between or after the files names.</p>
+
+<h4 style="font-weight:bold">Listing the disk directory I</h4>
+
+<p>If you just type the program's name along with a file name, the 
+VDK-80 will list the disk directory, excluding system and invisible 
+files. The listing contains the file name and extension, the file size 
+in bytes, the file date formatted as yyyy/mm/dd and the file attributes 
+as "SIMP", meaning: System, Invisible, Modified, Protection (0-7).</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Listing directory contents:
+
+Filename	    Size	Date		Attr
+----------------------------------------------------
+LPC/CMD     	     256	1981/05/00	---0
+MEMTEST/CMD 	    2048	1981/05/00	---0
+HERZ50/BLD  	      40	1981/05/00	---0
+
+Total of 2344 bytes in 3 files listed.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Listing the disk directory II</h4>
+
+<p>As previously mentioned, you can tweak the program's behavior by 
+adding some of the above-listed arguments in the command-line. In the 
+following example, the VDK-80 is requested to show the identified disk 
+format and operating system (-x), and then list only files with a CMD 
+extension (*/CMD), including system (-s) and invisible (-i) files.</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk */cmd -i -s -x</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+VDI: DMK (40:1:18,DD)
+OSI: TD3 (TRSDOS,02/20/99,00)
+
+Listing directory contents:
+
+Filename	    Size	Date		Attr
+----------------------------------------------------
+BASIC/CMD   	    5120	1981/05/00	SI-6
+CONVERT/CMD 	    2560	1981/05/00	SI-6
+XFERSYS/CMD 	    1024	1981/05/00	SI-6
+LPC/CMD     	     256	1981/05/00	---0
+MEMTEST/CMD 	    2048	1981/05/00	---0
+
+Total of 11008 bytes in 5 files listed.
+
+The operation completed successfully.
+</pre></div>
+
+<p>VDI stands for Virtual Disk Interface and DMK is one of the three 
+disk formats supported by the program (JV1, JV3, DMK). The numbers 
+between parenthesis are formatted as TT:S:SS,DD, representing the number
+ of tracks, sides, sectors per track and disk density (SD=Single, 
+DD=Double, MD=Mixed).</p>
+
+<p>OSI stands for Operating System Interface and TD3 is the module 
+representing the TRSDOS Model III. The data between parenthesis are the 
+disk name, disk date and the DOS version byte, as recorded in the GAT.</p>
+
+<h4 style="font-weight:bold">Reading files from the disk</h4>
+
+<p>If you want to copy all disk files to the current folder, just type:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -r</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Reading files from disk:
+
+LPC/CMD      -&gt; .\LPC.CMD   	     256 bytes	OK
+MEMCHECK/CMD -&gt; .\MEMCHECK.CMD	    2048 bytes	OK
+HERZ50/BLD   -&gt; .\HERZ50.BLD	      40 bytes	OK
+
+Total of 2344 bytes read from 3 files.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Writing files to the disk</h4>
+
+<p>To copy a file from the current folder to the disk, type:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -w readme.txt</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Writing files to disk:
+
+C:\README.TXT -&gt; README/TXT     291 bytes OK
+
+Total of 291 bytes written in 1 files.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Renaming files</h4>
+
+<p>To rename a file, type:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -n memtest/cmd memcheck/cmd</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Renaming files:
+
+MEMTEST/CMD  -&gt; MEMCHECK/CMD	OK
+
+Total of 1 files renamed.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Deleting files</h4>
+
+<p>Suppose you want to delete all files with a BLD extension from the disk. In that case, you would type:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -k */bld</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Deleting files:
+
+HERZ50/BLD  	OK
+
+Total of 1 files deleted.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Dumping a file's content</h4>
+
+<p>The program can show a file's content as hex bytes:</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -f lpc/cmd</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Dumping file contents:
+
+01 5A 00 70 2A 26 40 01 C2 03 AF ED 42 C2 2D 40 .Z.p*&amp;@.Â.¯íBÂ-@
+2A 11 44 22 36 70 22 46 70 22 4D 70 01 2A 00 B7 *.D"6p"Fp"Mp.*.·
+ED 42 22 11 44 23 22 26 40 11 2E 70 EB ED B0 C3 íB".D#"&amp;@..pëí°Ã
+2D 40 79 E6 7F 4F CA 4B 04 3A 57 70 FE 0C 28 0F -@yæOÊK.:Wpþ..(.
+FE 0D 28 0B FE 0A 28 07 79 32 57 70 C3 C3 03 79 þ.(.þ.(.y2WpÃÃ.y
+32 57 70 FE 0D CA 2A 04 C3 C3 03 0D 02 02 00 70 2Wpþ.Ê*.ÃÃ.....p
+21 E6 47 CD B9 43 21 54 48 CD B9 43 E1 5C CD 9C !æGÍ¹C!THÍ¹Cá\Íœ
+43 5D CD 9C 43 CD CA 43 11 00 30 3E 07 32 08 44 C]ÍœCÍÊC..0&gt;.2.D
+CD FE 43 E5 21 19 48 CD B9 43 21 6D 48 CD B9 43 ÍþCå!.HÍ¹C!mHÍ¹C
+E1 3A E8 37 4F A8 B7 ED 42 B7 ED 42 5C CD 9C 43 á:è7O¨·íB·íB\ÍœC
+5D CD 9C 43 CD C7 43 21 49 49 CD B9 43 C9 D5 F5 ]ÍœCÍÇC!IIÍ¹CÉÕõ
+7B 07 07 07 07 CD AD 43 7B CD AD 43 F1 D1 C9 E6 {....Í­C{Í­CñÑÉæ
+0F C6 90 27 CE 40 27 CD CC 43 C9 F5 7E FE 03 28 .Æ'Î@'ÍÌCÉõ~þ..(
+06 CD CC 43 23 18 F5 F1 C9 CD CA 43 3E 0D D5 FD .ÍÌC#.õñÉÍÊC&gt;.Õý
+E5 F5 FE 09 28 17 CD 33 00 FD 21 11 4A FD 34 00 åõþ.(.Í3.ý!.Jý4.
+FE 0D 20 04 FD 36 00 00 F1 FD E1 D1 C9 C5 3A 11 þ. .ý6..ñýáÑÉÅ:.
+
+Total of 256 bytes dumped.
+
+The operation completed successfully.
+</pre></div>
+
+<h4 style="font-weight:bold">Dumping all disk sectors</h4>
+
+<p>See a disk's structure, sector by sector, can be very useful to 
+diagnose several kinds of problems. Sometimes you find issues in the 
+boot sector, in the directory or other important areas that may be 
+causing access errors.</p>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">C:\&gt;v80 td13.dmk -d</pre></div>
+
+<div style="background-color:#DDD"><pre style="font-family:'Courier New'">VDK-80, The TRS-80 Virtual Disk Kit v1.5
+Written by Miguel Dutra (www.mdutra.com)
+Icon by Marco Martin (www.notmart.org)
+
+Dumping disk contents:
+
+[00:0:01]
+FE 11 3E D0 D3 F0 21 02 00 22 EA 43 AF 32 EC 43 þ.&gt;ÐÓð!.."êC¯2ìC
+CD 3E 43 FE 01 28 0C FE 02 20 E7 CD 3E 43 CD 35 Í&gt;Cþ.(.þ. çÍ&gt;CÍ5
+43 E9 FF CD 3E 43 D6 02 47 CD 35 43 CD 3E 43 77 CéÿÍ&gt;CÖ.GÍ5CÍ&gt;Cw
+23 10 F9 18 DB CD 3E 43 6F CD 3E 43 67 C9 C5 E5 #.ù.ÛÍ&gt;CoÍ&gt;CgÉÅå
+3A EC 43 B7 20 2E 06 09 C5 CD 7F 43 C1 E6 1D 28 :ìC· ...ÅÍCÁæ..(
+13 3E D0 D3 F0 10 F1 3E 17 CD 33 00 21 ED 43 CD .&gt;ÐÓð.ñ&gt;.Í3.!íCÍ
+1B 02 18 FE 2A EA 43 2C 7D FE 13 38 03 2E 01 24 ...þ*êC,}þ.8...$
+22 EA 43 AF 6F 26 4D 3C 32 EC 43 7E E1 C1 C9 CD "êC¯o&amp;M&lt;2ìC~áÁÉÍ
+C5 43 01 F3 00 3E 81 D3 F4 57 21 B7 43 22 4A 40 ÅC.ó.&gt;ÓôW!·C"J@.
+3E C3 32 49 40 F3 3E C0 D3 E4 1E 02 21 00 4D 3E &gt;Ã2I@ó&gt;ÀÓä..!.M&gt;
+84 D3 F0 CD E0 43 DB F0 A3 28 FB ED A2 7A F6 40 „ÓðÍàCÛð£(ûí¢zö@
+D3 F4 ED A2 C3 B0 43 E1 AF D3 E4 3E 81 D3 F4 CD Óôí¢Ã°Cá¯Óä&gt;ÓôÍ.
+E6 43 DB F0 C9 3E 81 D3 F4 2A EA 43 7C D3 F3 3E æCÛðÉ&gt;Óô*êC|Óó&gt;.
+1C D3 F0 CD E6 43 DB F0 CB 47 20 FA 7D D3 F2 C9 .ÓðÍæCÛðËG ú}ÓòÉ
+F5 F1 F5 F1 F5 F1 F5 F1 00 C9 02 00 00 17 45 52 õñõñõñõñ.É....ER
+52 4F 52 0D 01 26 40 73 18 10 02 40 00 00 13 28 ROR..&amp;@s...@...(
+
+(...)
+
+[39:0:18]
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 E5 åååååååååååååååå
+28 63 29 20 31 39 38 30 20 54 61 6E 64 79 20 20 (c) 1980 Tandy  
+
+Total of 720 sectors dumped.
+
+The operation completed successfully.
+</pre></div>
+
+<h3>Download</h3>
+
+<p>This software is provided free of charge, "as is", with no warranties
+ of any kind. If you accept these terms, go ahead and try it! Your 
+comments and suggestions will be very much appreciated.</p>
+
+<div style="overflow:auto; margin-bottom:10px;">
+	<a href="http://www.mdutra.com/files/VDK-80_v1.6.zip" title="Click to download">
+		<img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/Floppy2.png" alt="Image" title="Click to download" style="float:left; margin-right:10px;">
+		<div>VDK-80_v1.6.zip</div>
+	</a>
+	<div>VDK-80: The TRS-80 Virtual Disk Kit v1.6</div>
+	<div>72,670 bytes</div>
+</div>
+
+<div style="overflow:auto; margin-bottom:10px;">
+	<a href="http://www.mdutra.com/files/VDK-80_v1.6_source.zip" title="Click to download">
+		<img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/Floppy2.png" alt="Image" title="Click to download" style="float:left; margin-right:10px;">
+		<div>VDK-80_v1.6_source.zip</div>
+	</a>
+	<div>VDK-80: The TRS-80 Virtual Disk Kit v1.6 C++ Source Code</div>
+	<div>240,441 bytes</div>
+</div>
+</div></div></div>  </div>
+
+      <footer>
+      <ul class="links inline"><li class="translation_pt-br first last"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/pt-br/node/4" title="VDK-80: The TRS-80 Virtual Disk Kit" class="translation-link" lang="pt-br">Português</a></li>
+</ul>    </footer>
+  
+    </div>
+  
+</div> <!-- /.block -->
+</div>
+ <!-- /.region -->
+      </section> <!-- /#main -->
+    </div>
+  
+      
+    </div>
+
+          <aside id="sidebar-second" role="complementary">
+        <div class="region region-sidebar-second">
+  <div id="block-locale-language" class="block block-locale">
+
+        <h2>Languages</h2>
+    
+  <div class="content">
+    <ul class="language-switcher-locale-url"><li class="en first active"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/node/3" class="language-link active" title="VDK-80" lang="en">English</a></li>
+<li class="pt-br last"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/pt-br/node/4" class="language-link" title="VDK-80" lang="pt-br">Português</a></li>
+</ul>  </div>
+  
+</div> <!-- /.block -->
+<div id="block-user-login" class="block block-user">
+
+        <h2>User login</h2>
+    
+  <div class="content">
+    <form action="http://www.mdutra.com/node/3?destination=node/3" method="post" id="user-login-form" accept-charset="UTF-8"><div><div class="form-item form-type-textfield form-item-name">
+  <label for="edit-name">Username <span class="form-required" title="This field is required.">*</span></label>
+ <input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;);" id="edit-name" name="name" size="15" maxlength="60" class="form-text required" type="text">
+</div>
+<div class="form-item form-type-password form-item-pass">
+  <label for="edit-pass">Password <span class="form-required" title="This field is required.">*</span></label>
+ <input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;);" id="edit-pass" name="pass" size="15" maxlength="128" class="form-text required" type="password">
+</div>
+<div class="item-list"><ul><li class="first last"><a href="http://www.classiccmp.org/cpmarchives/trs80/mirrors/mdutra/www.mdutra.com/user/password" title="Request new password via e-mail.">Request new password</a></li>
+</ul></div><input name="form_build_id" value="form-s7j2U1mRbDjrBeaC_U8e6eF88uGVltp8mScVKhXyCHk" type="hidden">
+<input name="form_id" value="user_login_block" type="hidden">
+<div class="form-actions form-wrapper" id="edit-actions"><input id="edit-submit" name="op" value="Log in" class="form-submit" type="submit"></div></div></form>  </div>
+  
+</div> <!-- /.block -->
+<div id="block-block-1" class="block block-block">
+
+        <h2>Visitors</h2>
+    
+  <div class="content">
+    <a href="http://www4.clustrmaps.com/user/795100009">
+<img src="VDK-80:%20The%20TRS-80%20Virtual%20Disk%20Kit%20%7C%20CP%20500_files/cp500.png" alt="Locations of visitors to this page">
+</a>
+  </div>
+  
+</div> <!-- /.block -->
+</div>
+ <!-- /.region -->
+      </aside>  <!-- /#sidebar-first -->
+      
+  <div class="clear"></div>
+   
+    </div> 
+  
+
+   
+  <div id="footer">
+          
+    <div id="copyright">
+     <p class="copyright">Copyright © 2013, CP 500 </p> <p class="credits"> Theme by  <a href="http://www.devsaran.com/">Devsaran</a></p>
+    <div class="clear"></div>
+    </div>
+  </div>
+</div>
+  
+
+<div style="max-height: 16px; vertical-align: top; position: absolute; top: 377.683px; left: 1445.08px; z-index: 10;" id="__lpform_edit-name"><img style="opacity: 0.6; vertical-align: top;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABRElEQVQ4T72U0W3CMBCGsZI8lxHoBKUbwFukJMJMAN2ATgCdAJigMAFGSaS8tSOwAYwA75HS/6ocMpYjrBbwSy4n+8t/d78jWjde4sa81uOAYRh2fN//LMvyrSiKA1XCOYQfWZZ926qzKoyiaCKEmNOBqqrWeZ6PKUZ+hfyoBi0BnZhQKzBJEgnQhjdD5TPFULznHMDDNE2VE7BWo3BowCrpyerwsS1US+eSuV+e5+0AedIPAnYKgqCjlDpeBcZxPKO2aRu7iE0lNAx9IF30cnhuhf4VAHWYTYA1B+B5FhdDuQfQLIfKfTF6uEZfD3oOCqlVv6vxpkgp27AL2aRt1HlE/pXNbvagEQgTN9qGhgJV/atT5g3oZQ/xF7//29i1faYEbLp6yL/D3AvnkmuVM6gbGz+HlZ5zBjqb0Nj4uP/hXxX+AIFukhXZwS5VAAAAAElFTkSuQmCC" id="__lpform_edit-name_icon" height="16" width="16"></div><div style="max-height: 16px; vertical-align: top; position: absolute; top: 452.6px; left: 1445.08px; z-index: 10;" id="__lpform_edit-pass"><img style="opacity: 0.6; vertical-align: top;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABRElEQVQ4T72U0W3CMBCGsZI8lxHoBKUbwFukJMJMAN2ATgCdAJigMAFGSaS8tSOwAYwA75HS/6ocMpYjrBbwSy4n+8t/d78jWjde4sa81uOAYRh2fN//LMvyrSiKA1XCOYQfWZZ926qzKoyiaCKEmNOBqqrWeZ6PKUZ+hfyoBi0BnZhQKzBJEgnQhjdD5TPFULznHMDDNE2VE7BWo3BowCrpyerwsS1US+eSuV+e5+0AedIPAnYKgqCjlDpeBcZxPKO2aRu7iE0lNAx9IF30cnhuhf4VAHWYTYA1B+B5FhdDuQfQLIfKfTF6uEZfD3oOCqlVv6vxpkgp27AL2aRt1HlE/pXNbvagEQgTN9qGhgJV/atT5g3oZQ/xF7//29i1faYEbLp6yL/D3AvnkmuVM6gbGz+HlZ5zBjqb0Nj4uP/hXxX+AIFukhXZwS5VAAAAAElFTkSuQmCC" id="__lpform_edit-pass_icon" height="16" width="16"></div></body></html>
