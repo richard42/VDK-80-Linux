@@ -1,5 +1,5 @@
 # VDK-80-Linux 
-# Based on VDK-80, The TRS-80 Virtual Disk Kit v1.6 for Windows
+# Based on VDK-80, The TRS-80 Virtual Disk Kit v1.7 for Windows
 # By Miguel Dutra www.mdutra.com
 # Linux Port by Mike Gore
 #
@@ -10,4 +10,8 @@
 # 	http://www.trs-80.com/wordpress/dsk-and-dmk-image-utilities/
 #
 # Tools to Read and Write files inside common TRS-80 emulator images
+@par Copyright
+ * See [COPYRIGHT.md](COPYRIGHT.md) for a full copyright notice for the project
+
+
 
