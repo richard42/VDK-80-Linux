@@ -13,8 +13,8 @@
 //---------------------------------------------------------------------------------
 
 CTD4::CTD4()
-:   m_pDir(NULL), m_nDirTrack(0), m_nDirSectors(0), m_nSides(0), m_nSectorsPerTrack(0), m_nGranulesPerTrack(0),
-    m_nGranulesPerCylinder(0), m_nSectorsPerGranule(0), m_dwFilePos(0), m_wSector(0), m_Buffer()
+:   m_pDir(NULL), m_nDirTrack(0), m_nDirSectors(0), m_nMaxDirSectors(0), m_nSides(0), m_nSectorsPerTrack(0),
+    m_nGranulesPerTrack(0), m_nGranulesPerCylinder(0), m_nSectorsPerGranule(0), m_dwFilePos(0), m_wSector(0), m_Buffer()
 {
 }
 
@@ -35,7 +35,6 @@ CTD4::~CTD4()
 DWORD CTD4::Load(CVDI* pVDI, DWORD dwFlags)
 {
 
-    BYTE    nMaxSectors;
     BYTE    nSides;
     DWORD   dwBytes;
     DWORD   dwError = NO_ERROR;
@@ -75,12 +74,12 @@ DWORD CTD4::Load(CVDI* pVDI, DWORD dwFlags)
     // Calculate the number of directory sectors
     m_nDirSectors = m_nSectorsPerTrack * m_nSides;
 
-    // Max Dir Sectors = HIT Size / Entries per Sector + 2 sectors (GAT/HIT)
-    nMaxSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD4_FPDE))) + 2;
+    // Max Dir Sectors = HIT Size / Entries per Sector
+    m_nMaxDirSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD4_FPDE)));
 
     // If dir sectors exceeds max sectors, limit to max
-    if (m_nDirSectors > nMaxSectors)
-        m_nDirSectors = nMaxSectors;
+    if (m_nDirSectors > m_nMaxDirSectors)
+        m_nDirSectors = m_nMaxDirSectors;
 
     // If not first Load, release the previously allocated memory
     if (m_pDir != NULL)
@@ -158,19 +157,25 @@ DWORD CTD4::Load(CVDI* pVDI, DWORD dwFlags)
 DWORD CTD4::Dir(void** pFile, OSI_DIR nFlag)
 {
 
+
     TD4_HIT nMode = (nFlag == OSI_DIR_FIND_FIRST ? TD4_HIT_FIND_FIRST_USED : TD4_HIT_FIND_NEXT_USED);
 
     DWORD dwError = NO_ERROR;
 
+    BYTE x;
     do
     {
 
+        dwError = ScanHIT(pFile, nMode);
         // Return a pointer to the first/next non-empty file entry
-        if ((dwError = ScanHIT(pFile, nMode)) != NO_ERROR)
+        if (dwError != NO_ERROR)
             break;
 
         // Change the mode to "next" for the remaining searches
         nMode = TD4_HIT_FIND_NEXT_USED;
+
+
+        x = ((TD4_FPDE*)(*pFile))->nAttributes[0];
 
     }   // Repeat until we get a pointer to a file entry which is Active and Primary
     while (!(((TD4_FPDE*)(*pFile))->nAttributes[0] & TD4_ATTR0_ACTIVE) || (((TD4_FPDE*)(*pFile))->nAttributes[0] & TD4_ATTR0_EXTENDED));
@@ -815,14 +820,15 @@ DWORD CTD4::CheckDir(void)
 // Scan the Hash Index Table
 //---------------------------------------------------------------------------------
 
+
 DWORD CTD4::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
 {
 
-    static int nLastCol = -1;
-    static int nLastRow = 0;
+    static int nLastRow = -1;
+    static int nLastCol = 0;
 
-    int nCols, nCol;
     int nRows, nRow;
+    int nCols, nCol;
     int nSlot;
 
     DWORD dwError = NO_ERROR;
@@ -830,33 +836,33 @@ DWORD CTD4::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
     // If mode is any "Find First", reset static variables
     if (nMode != TD4_HIT_FIND_NEXT_USED)
     {
-        nLastCol = -1;
-        nLastRow = 0;
+        nLastRow = -1;
+        nLastCol = 0;
     }
 
     // Retrieve last values from static variables
-    nCol = nLastCol;
     nRow = nLastRow;
+    nCol = nLastCol;
 
-    // Calculate max HIT columns and rows
-    nCols = m_nDirSectors - 2;
+    // Calculate max HIT rows and columns
     nRows = m_DG.LT.wSectorSize / sizeof(TD4_FPDE);
+    nCols = m_nDirSectors - 2;
 
     while (true)
     {
 
-        // Increment column
-        nCol++;
+        // Increment row
+        nRow++;
 
-        // If column reaches max, reset it and advance to the next row
-        if (nCol >= nCols)
+        // If row reaches max, reset it and advance to the next column
+        if (nRow >= nRows)
         {
-            nCol = 0;
-            nRow++;
+            nRow = 0;
+            nCol++;
         }
 
-        // If row reaches max, then we have reached the end of the HIT
-        if (nRow >= nRows)
+        // If column reaches max, then we have reached the end of the HIT
+        if (nCol >= nCols)
         {
             if (nHash != 0)
                 dwError = ERROR_FILE_NOT_FOUND;
@@ -867,16 +873,21 @@ DWORD CTD4::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
             break;
         }
 
-        // Get value in HIT[Row * sizeof(FPDE) + Col]
-        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * nCols * sizeof(TD4_FPDE)) + nCol];
+
+        // Get value in HIT[Row * MaxDirSectors + Col] (MaxDirSectors normally equals 32)
+        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * m_nMaxDirSectors) + nCol];
+
 
         // If this is not what we are looking for, skip to the next
         if ((nMode == TD4_HIT_FIND_FIRST_FREE && nSlot != 0) || (nMode != TD4_HIT_FIND_FIRST_FREE && nSlot == 0))
             continue;
 
+
         // If there is a hash to match and it doesn't match, skip to the next
         if (nHash != 0 && nHash != nSlot)
             continue;
+
+        if ((*pFile = DEC2FDE((nRow << 5) + nCol)) == NULL)
 
         // Return pointer corresponding to the current Directory Entry Code (DEC)
         if ((*pFile = DEC2FDE((nRow << 5) + nCol)) == NULL)
@@ -887,8 +898,8 @@ DWORD CTD4::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
     }
 
     // Update static variables
-    nLastCol = nCol;
     nLastRow = nRow;
+    nLastCol = nCol;
 
     return dwError;
 

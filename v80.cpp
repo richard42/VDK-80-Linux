@@ -131,9 +131,8 @@ int main(int argc, char* argv[])
     DWORD   dwError;
 
     // Print authoring information
-    puts("VDK-80, The TRS-80 Virtual Disk Kit v1.6");
+    puts("VDK-80, The TRS-80 Virtual Disk Kit v1.7");
     puts("Written by Miguel Dutra (www.mdutra.com)");
-    puts("Icon by Marco Martin (www.notmart.org)");
     puts("Updated for Linux by Mike Gore github.com/magore");
 
     // Print usage instructions when no parameters are provided

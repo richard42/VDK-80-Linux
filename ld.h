@@ -1,11 +1,11 @@
 //---------------------------------------------------------------------------------
-// Operating System Interface for DBLDOS
+// Operating System Interface for LDOS and LSDOS
 //---------------------------------------------------------------------------------
 
-class   CDD: public CND
+class   CLD: public CTD4
 {
 public:
     DWORD   Load(CVDI* pVDI, DWORD dwFlags);                                        // Validate DOS version and define operating parameters
 protected:
-    DWORD   CheckDir(void);                                                         // Check the directory structure
+    DWORD   ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash = 0);                   // Scan the Hash Index Table
 };

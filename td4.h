@@ -90,6 +90,7 @@ protected:
     BYTE*           m_pDir;                                                         // Pointer to buffer containing disk directory
     BYTE            m_nDirTrack;                                                    // Directory track
     BYTE            m_nDirSectors;                                                  // Number of directory sectors
+    BYTE            m_nMaxDirSectors;                                               // Number maximum of directory sectors
     BYTE            m_nSides;                                                       // Number of disk sides
     BYTE            m_nSectorsPerTrack;                                             // Sectors per track
     BYTE            m_nGranulesPerTrack;                                            // Granules per track

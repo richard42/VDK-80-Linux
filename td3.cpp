@@ -17,7 +17,6 @@
 DWORD CTD3::Load(CVDI* pVDI, DWORD dwFlags)
 {
 
-    BYTE    nMaxSectors;
     DWORD   dwBytes;
     DWORD   dwError = NO_ERROR;
 
@@ -56,12 +55,12 @@ DWORD CTD3::Load(CVDI* pVDI, DWORD dwFlags)
     // Calculate number of directory sectors
     m_nDirSectors = m_nSectorsPerTrack * m_nSides;
 
-    // Max Dir Sectors = HIT Size / Entries per Sector + 2 sectors (GAT/HIT)
-    nMaxSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD3_FPDE))) + 2;   // [PATCH]
+    // Max Dir Sectors = HIT Size / Entries per Sector
+    m_nMaxDirSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD3_FPDE)));   // [PATCH]
 
     // If dir sectors exceeds max sectors, limit to max
-    if (m_nDirSectors > nMaxSectors)
-        m_nDirSectors = nMaxSectors;
+    if (m_nDirSectors > m_nMaxDirSectors)
+        m_nDirSectors = m_nMaxDirSectors;
 
     // If not first Load, release the previously allocated memory
     if (m_pDir != NULL)
@@ -392,6 +391,8 @@ DWORD CTD3::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
     int nRows, nRow;
     int nSlot;
 
+    BYTE nEntriesPerSector = m_DG.LT.wSectorSize / sizeof(TD3_FPDE);
+
     DWORD dwError = NO_ERROR;
 
     // If mode is any "Find First", reset static variables
@@ -434,8 +435,8 @@ DWORD CTD3::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
             break;
         }
 
-        // Get value in HIT[Row * sizeof(FPDE) + Col]
-        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * nCols * sizeof(TD3_FPDE)) + nCol]; // [PATCH]
+        // Get value in HIT[Row * Cols + Col]
+        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * nCols) + nCol];
 
         // If this is not what we are looking for, skip to the next
         if ((nMode == TD4_HIT_FIND_FIRST_FREE && nSlot != 0) || (nMode != TD4_HIT_FIND_FIRST_FREE && nSlot == 0))
@@ -446,7 +447,8 @@ DWORD CTD3::ScanHIT(void** pFile, TD4_HIT nMode, BYTE nHash)
             continue;
 
         // Return pointer corresponding to the current Directory Entry Code (DEC)
-        if ((*pFile = DEC2FDE((nRow << 5) + nCol)) == NULL)
+        if ((*pFile = DEC2FDE((((nRow * nCols + nCol) % nEntriesPerSector) << 5) + ((nRow * nCols + nCol) / nEntriesPerSector))) == NULL)   // [PATCH]
+//        if ((*pFile = DEC2FDE((nRow << 5) + nCol)) == NULL)
             dwError = ERROR_INVALID_ADDRESS;
 
         break;
@@ -681,6 +683,16 @@ DWORD CTD3::GetFDE(void** pFile)
 void* CTD3::DEC2FDE(BYTE nDEC)
 {
 
+    DWORD dwSectorOffset = ((nDEC & TD4_DEC_SECTOR) + 2) * m_DG.LT.wSectorSize;
+    DWORD dwEntryOffset = ((nDEC & TD4_DEC_ENTRY) >> 5) * sizeof(TD3_FPDE); // [PATCH]
+
+    return ((nDEC & TD4_DEC_SECTOR) < m_nDirSectors ? &m_pDir[dwSectorOffset + dwEntryOffset] : NULL);
+
+}
+/*
+void* CTD3::DEC2FDE(BYTE nDEC)
+{
+
     BYTE    nEntriesPerSector = m_DG.LT.wSectorSize / sizeof(TD3_FPDE);             // [PATCH]
     DWORD   dwSectorOffset = (nDEC / nEntriesPerSector + 2) * m_DG.LT.wSectorSize;  // [PATCH]
     DWORD   dwEntryOffset = (nDEC % nEntriesPerSector) * sizeof(TD3_FPDE);          // [PATCH]
@@ -688,6 +700,7 @@ void* CTD3::DEC2FDE(BYTE nDEC)
     return ((nDEC / nEntriesPerSector) < m_nDirSectors ? &m_pDir[dwSectorOffset + dwEntryOffset] : NULL);   // [PATCH]
 
 }
+*/
 
 //---------------------------------------------------------------------------------
 // Convert a pointer to a Directory Entry (FDE) into a Directory Entry Code (DEC)

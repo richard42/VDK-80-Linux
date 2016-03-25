@@ -16,7 +16,6 @@
 DWORD CTD1::Load(CVDI* pVDI, DWORD dwFlags)
 {
 
-    BYTE    nMaxSectors;
     DWORD   dwBytes;
     DWORD   dwError = NO_ERROR;
 
@@ -55,12 +54,12 @@ DWORD CTD1::Load(CVDI* pVDI, DWORD dwFlags)
     // Calculate the number of directory sectors
     m_nDirSectors = m_nSectorsPerTrack * m_nSides;
 
-    // Max Dir Sectors = HIT Size / Entries per Sector + 2 sectors (GAT/HIT)
-    nMaxSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD4_FPDE))) + 2;
+    // Max Dir Sectors = HIT Size / Entries per Sector
+    m_nMaxDirSectors = (m_DG.LT.wSectorSize / (BYTE)(m_DG.LT.wSectorSize / sizeof(TD4_FPDE)));
 
     // If dir sectors exceeds max sectors, limit to max
-    if (m_nDirSectors > nMaxSectors)
-        m_nDirSectors = nMaxSectors;
+    if (m_nDirSectors > m_nMaxDirSectors)
+        m_nDirSectors = m_nMaxDirSectors;
 
     // If not first Load, release the previously allocated memory
     if (m_pDir != NULL)

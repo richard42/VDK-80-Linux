@@ -868,8 +868,8 @@ DWORD CND::ScanHIT(void** pFile, ND_HIT nMode, BYTE nHash)
         if (nRow * sizeof(ND_FPDE) + nCol == 31)
             continue;
 
-        // Get value in HIT[Row * sizeof(FPDE) + Col]
-        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * nCols * sizeof(ND_FPDE)) + nCol];
+        // Get value in HIT[Row * Cols + Col]
+        nSlot = m_pDir[m_DG.LT.wSectorSize + (nRow * nCols) + nCol];
 
         // If this is not what we are looking for, skip to the next
         if ((nMode == ND_HIT_FIND_FIRST_FREE && nSlot != 0) || (nMode != ND_HIT_FIND_FIRST_FREE && nSlot == 0))
