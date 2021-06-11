@@ -35,9 +35,8 @@
 typedef int BOOL;
 typedef unsigned char CHAR;
 typedef unsigned char BYTE;
-typedef unsigned long DWORD;
 typedef unsigned short WORD;
-typedef unsigned int UNINT32;
+typedef unsigned int DWORD;
 
 typedef FILE * HANDLE;
 

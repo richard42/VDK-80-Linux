@@ -255,7 +255,8 @@ DWORD CND::Open(void** pFile, const char cName[11])
             continue;
 
         // If entry's filename matches the caller's filename, we are done
-        if (memcmp(((ND_FPDE*)(*pFile))->cName, cName, sizeof(cName)) == 0)
+        // FIXME if (memcmp(((ND_FPDE*)(*pFile))->cName, cName, sizeof(cName)) == 0)
+        if (memcmp(((ND_FPDE*)(*pFile))->cName, cName, 11) == 0)
             break;
 
     }

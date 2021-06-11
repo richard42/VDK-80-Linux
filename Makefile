@@ -2,6 +2,7 @@
 SRC=cpm.cpp dd.cpp dmk.cpp jv1.cpp jv3.cpp md.cpp nd.cpp \
 	osi.cpp rd.cpp td1.cpp td3.cpp td4.cpp vdi.cpp v80.cpp
 
+CFLAGS = -g -fpermissive
 
 all:	v80
 

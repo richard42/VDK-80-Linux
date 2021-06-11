@@ -268,7 +268,7 @@ DWORD Dir()
         FmtName(File.szName, File.szType, (strcmp(typeid(*gpOSI).name()+2, "CPM") ? "/" : "."), szFile);
 
         // Print file information
-        printf("%-12s\t%8lu\t%04d/%02d/%02d\t%c%c%c%d\r\n", szFile, File.dwSize, File.Date.wYear, File.Date.nMonth, File.Date.nDay, (File.bSystem?'S':'-'), (File.bInvisible?'I':'-'), (File.bModified?'M':'-'), File.nAccess);
+        printf("%-12s\t%8u\t%04d/%02d/%02d\t%c%c%c%d\r\n", szFile, File.dwSize, File.Date.wYear, File.Date.nMonth, File.Date.nDay, (File.bSystem?'S':'-'), (File.bInvisible?'I':'-'), (File.bModified?'M':'-'), File.nAccess);
 
         // Update operation status variables
         wFiles++;
@@ -277,7 +277,7 @@ DWORD Dir()
     }
 
     // Print operation summary
-    printf("\r\nTotal of %ld bytes in %d files listed.\r\n\r\n", dwSize, wFiles);
+    printf("\r\nTotal of %d bytes in %d files listed.\r\n\r\n", dwSize, wFiles);
 
     // If exited on "No More Files" then "No Error"
     if (dwError == ERROR_NO_MORE_FILES)
@@ -372,14 +372,14 @@ DWORD Get()
         // Check if the file is not empty
         if (File.dwSize == 0)
         {
-            printf("%8ld bytes\tSkipped\r\n", File.dwSize);
+            printf("%8d bytes\tSkipped\r\n", File.dwSize);
             continue;
         }
 
         // Check whether the file size is valid (<360KB)
         if (File.dwSize > MAX_FILE_SIZE)
         {
-            printf("%8ld bytes\tInvalid Size!\r\n", File.dwSize);
+            printf("%8d bytes\tInvalid Size!\r\n", File.dwSize);
             continue;
         }
 
@@ -417,7 +417,7 @@ DWORD Get()
         fclose(hFile);
 
         // Print total number of bytes extracted
-        printf("%8ld bytes\tOK\r\n", File.dwSize);
+        printf("%8d bytes\tOK\r\n", File.dwSize);
 
         // Update operation status variables
         wFiles++;
@@ -426,7 +426,7 @@ DWORD Get()
     }
 
     // Print operation summary
-    printf("\r\nTotal of %ld bytes read from %d files.\r\n\r\n", dwSize, wFiles);
+    printf("\r\nTotal of %d bytes read from %d files.\r\n\r\n", dwSize, wFiles);
 
     // If exited on "No More Files" then "No Error"
     if (dwError == ERROR_NO_MORE_FILES)
@@ -447,7 +447,7 @@ DWORD Get()
         delete gpVDI;
 
 	if(dwError)
-		printf("Get dwError:%ld\n", dwError);
+		printf("Get dwError:%d\n", dwError);
 
     // Return
     Exit_0:
@@ -616,7 +616,7 @@ DWORD Put()
         }
 
         // Print the total number of bytes written
-        printf("%8ld bytes OK\r\n", File.dwSize);
+        printf("%8d bytes OK\r\n", File.dwSize);
 
         // Update operation status variables
         wFiles++;
@@ -625,7 +625,7 @@ DWORD Put()
     }
 
     // Print operation summary
-    printf("\r\nTotal of %ld bytes written in %d files.\r\n\r\n", dwSize, wFiles);
+    printf("\r\nTotal of %d bytes written in %d files.\r\n\r\n", dwSize, wFiles);
 
     // Close find file handle
     Exit_4:
@@ -826,7 +826,7 @@ DWORD Del()
         // Print error message
         if (dwError != 0)
         {
-			printf("Delete dwError:%ld\n", dwError);
+			printf("Delete dwError:%d\n", dwError);
             continue;
         }
 
@@ -855,7 +855,7 @@ DWORD Del()
         delete gpVDI;
 
 	if (dwError)
-		printf("Delete dwError:%ld\n", dwError);
+		printf("Delete dwError:%d\n", dwError);
 
     // Return
     Exit_0:
@@ -931,14 +931,14 @@ DWORD DumpFile()
         // Set the file pointer
         if ((dwError = gpOSI->Seek(pFile, 0)) != 0)
         {
-            printf("Dump File Seek: dwError:%ld\n", dwError);
+            printf("Dump File Seek: dwError:%d\n", dwError);
             continue;
         }
 
         // Read the file contents
         if ((dwError = gpOSI->Read(pFile, pBuffer, File.dwSize)) != 0 && !(gdwFlags & V80_FLAG_READBAD))
         {
-            printf("Dump File Read: dwError:%ld\n", dwError);
+            printf("Dump File Read: dwError:%d\n", dwError);
             continue;
         }
 
@@ -946,7 +946,7 @@ DWORD DumpFile()
         Dump(pBuffer, File.dwSize);
 
         // Print operation summary
-        printf("\r\nTotal of %ld bytes dumped.\r\n\r\n", File.dwSize);
+        printf("\r\nTotal of %d bytes dumped.\r\n\r\n", File.dwSize);
 
     }
 
@@ -1451,15 +1451,18 @@ DWORD SetOpt(void* pParam)
 {
 
     DWORD dwError = 0;
+    DWORD p = (unsigned long) pParam & 0xffffffff;
 
-    if (((gdwFlags | (DWORD)pParam) & V80_FLAG_SS) && ((gdwFlags | (DWORD)pParam) & V80_FLAG_DS))
+// FIXME if (((gdwFlags | (DWORD)pParam) & V80_FLAG_SS) && ((gdwFlags | (DWORD)pParam) & V80_FLAG_DS))
+    if (((gdwFlags | p) & V80_FLAG_SS) && ((gdwFlags | p) & V80_FLAG_DS))
     {
         puts("Attempt to set conflicting disk parameters.");
         dwError = ERROR_BAD_ARGUMENTS;
         goto Done;
     }
 
-    gdwFlags |= (DWORD)pParam;
+// FIXME gdwFlags |= (DWORD)pParam;
+    gdwFlags |= p;
 
     Done:
     return dwError;
@@ -1550,6 +1553,6 @@ void PrintError(DWORD dwError)
 	if(dwError >= 0 && dwError < ERROR_LAST)
 		printf("dwError: %s\n", errors_msg[dwError]);
 	else
-		printf("dwError: unknown (%ld)\n", dwError);
+		printf("dwError: unknown (%d)\n", dwError);
 
 }

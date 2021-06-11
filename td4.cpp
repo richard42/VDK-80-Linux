@@ -245,7 +245,8 @@ DWORD CTD4::Open(void** pFile, const char cName[11])
             continue;
 
         // If entry's filename matches the caller's filename, we are done
-        if (memcmp(((TD4_FPDE*)(*pFile))->cName, cName, sizeof(cName)) == 0)
+        // FIXME if (memcmp(((TD4_FPDE*)(*pFile))->cName, cName, sizeof(cName)) == 0)
+        if (memcmp(((TD4_FPDE*)(*pFile))->cName, cName, 11) == 0)
             break;
 
     }

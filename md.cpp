@@ -170,7 +170,8 @@ DWORD CMD::Open(void** pFile, const char cName[11])
 
     for (int i = 0; i < 2; i++)
     {
-        if (memcmp(m_Dir[i].szName, cName, sizeof(cName)) == 0)
+        // FIXME if (memcmp(m_Dir[i].szName, cName, sizeof(cName)) == 0)
+        if (memcmp(m_Dir[i].szName, cName, 11) == 0)
         {
             *pFile = &m_Dir[i];
             goto Done;
