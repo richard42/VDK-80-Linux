@@ -105,18 +105,12 @@ DWORD CJV3::Load(HANDLE hFile, DWORD dwFlags)
         goto Done;
     }
 
-
     // Calculate position of the second header as the sum of sector sizes plus the first header size
 
     dwBytes = sizeof(JV3_HEADER);
 
-
     for (int x = 0; x < 2901 && m_pHeader->Sector[x].nTrack != 0xFF; x++)
-{
-        printf("JV3 Load GetSectorSize = %d\n", GetSectorSize(m_pHeader->Sector[x]));
         dwBytes += GetSectorSize(m_pHeader->Sector[x]);
-}
-
 
     // Check if file size indicates the existance of a second header
 
@@ -124,6 +118,7 @@ DWORD CJV3::Load(HANDLE hFile, DWORD dwFlags)
 
     if (GetFileSize(hFile) > (dwBytes + sizeof(JV3_HEADER)))
     {
+
         // Position file pointer at the second header
         if (fseek(hFile, dwBytes, 0) == -1)
             throw ERROR_SEEK;
@@ -134,6 +129,7 @@ DWORD CJV3::Load(HANDLE hFile, DWORD dwFlags)
 
         // Set flag indicating that this is an extended disk
         m_bExtended = true;
+
     }
 
     // Detect disk geometry
@@ -249,7 +245,6 @@ void CJV3::FindGeometry()
     // Set last sectors to high values, so we can look for the highest ones
     m_DG.FT.nFirstSector = 0xFF;
     m_DG.LT.nFirstSector = 0xFF;
-    m_DG.LT.nTrack = Sector.nTrack;
 
     // Zero total disk sectors
     m_wSectors = 0;
