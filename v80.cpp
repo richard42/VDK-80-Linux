@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
     }
 
     // Open disk image
-    if ( (ghFile = fopen(gpFileSpec[1], "rw")) == NULL )
+    if ( (ghFile = fopen(gpFileSpec[1], "r+")) == NULL )
     {
 		printf("Can not open: %s\n", gpFileSpec[1]);
         goto Exit_2;
@@ -405,10 +405,11 @@ DWORD Get()
         }
 
 		dwBytes = fwrite(pBuffer, 1, File.dwSize, hFile);
+
         // Write buffer contents to Windows file
         if (dwBytes != File.dwSize)
         {
-			printf("Write wrror: %s\n", szFile);
+			printf("Write error: %s\n", szFile);
             fclose(hFile);
             continue;
         }
