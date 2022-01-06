@@ -570,7 +570,7 @@ DWORD Put()
         FmtName(File.szName, File.szType, (strcmp(typeid(*gpOSI).name()+2, "CPM") ? "/" : "."), szFile);
 
         // Print the filenames
-        printf("%-12s -> %-12s\t", szFileSpec, szFile);
+        printf("%-12s/%-12s -> %-12s\t", szFileSpec, file_name, szFile);
 
         // Check whether the file size is valid
         if (File.dwSize > MAX_FILE_SIZE )
