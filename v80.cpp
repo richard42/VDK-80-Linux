@@ -462,15 +462,13 @@ DWORD Get()
 
 DWORD Put()
 {
-
-    FILE 	    *hFile;
-
     char            szFileSpec[MAX_PATH];
     char*           pFileName;
     char            cFile[11];
     char            szFile[13];
     OSI_FILE        File;
     void*           pFile;
+    FILE 	       *hFile;
     WORD            wFiles = 0;
     DWORD           dwSize = 0;
     BYTE*           pBuffer = NULL;
@@ -479,7 +477,6 @@ DWORD Put()
     DIR *dir;
     class dirent *ent;
     class stat st;
-
 
     // Check whether the user informed a FROM filespec
     if (gpFileSpec[2] == NULL)
@@ -515,30 +512,38 @@ DWORD Put()
 	if( realpath(gpFileSpec[2], szFileSpec) == NULL )
     {
 		perror("Put");
+        dwError = ERROR_NOT_FOUND;
         goto Exit_3;
     }
 
     pFileName = basename(szFileSpec);
 
-	dir = opendir(gpFileSpec[2]);
+	dir = opendir(szFileSpec);
 
     // Get the first file in the list
     if (!dir)
     {
 		perror("opendir failed");
+        dwError = ERROR_NOT_FOUND;
         goto Exit_3;
     }
 
     // While there are files pending for writing
     while ((ent = readdir(dir)) != NULL) {
+        char file_path[PATH_MAX];
 		struct tm *t;
         const char *file_name = ent->d_name;
 
         if (file_name[0] == '.')
             continue;
+            
+        snprintf(file_path, sizeof(file_path), "%s/%s", szFileSpec, file_name);
 
-        if (stat(file_name, &st) == -1)
+        if (stat(file_path, &st) == -1)
+        {
+            printf("stat(%s) failed.\n", file_path);
             continue;
+        }
 
         if(st.st_mode & S_IFDIR) 
             continue;
@@ -580,9 +585,9 @@ DWORD Put()
         }
 
         // Open the Windows file
-        if ( (hFile = fopen(file_name, "r")) == NULL)
+        if ( (hFile = fopen(file_path, "r")) == NULL)
         {
-            printf("Can't open: %s\n", file_name);
+            printf("Can't open: %s\n", file_path);
             continue;
         }
 
