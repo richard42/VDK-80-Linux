@@ -463,7 +463,6 @@ DWORD Get()
 DWORD Put()
 {
     char            szFileSpec[MAX_PATH];
-    char*           pFileName;
     char            cFile[11];
     char            szFile[13];
     OSI_FILE        File;
@@ -474,7 +473,7 @@ DWORD Put()
     BYTE*           pBuffer = NULL;
     DWORD           dwBytes;
     DWORD           dwError = 0;
-    DIR *dir;
+    DIR            *dir = NULL;
     class dirent *ent;
     class stat st;
 
@@ -516,37 +515,46 @@ DWORD Put()
         goto Exit_3;
     }
 
-    pFileName = basename(szFileSpec);
-
-	dir = opendir(szFileSpec);
-
-    // Get the first file in the list
-    if (!dir)
+    if (stat(szFileSpec, &st) == -1)
     {
-		perror("opendir failed");
+        printf("stat(%s) failed.\n", szFileSpec);
         dwError = ERROR_NOT_FOUND;
         goto Exit_3;
     }
 
+    if(st.st_mode & S_IFDIR)
+    {
+        dir = opendir(szFileSpec);
+        if (!dir)
+        {
+		    perror("opendir failed");
+            dwError = ERROR_NOT_FOUND;
+            goto Exit_3;
+        }
+    }
+
     // While there are files pending for writing
-    while ((ent = readdir(dir)) != NULL) {
+    while (dir == NULL || (ent = readdir(dir)) != NULL) {
         char file_path[PATH_MAX];
 		struct tm *t;
-        const char *file_name = ent->d_name;
+        const char *file_name = (dir == NULL) ? basename(szFileSpec) : ent->d_name;
 
         if (file_name[0] == '.')
-            continue;
-            
-        snprintf(file_path, sizeof(file_path), "%s/%s", szFileSpec, file_name);
+            goto Loop_End;
+        
+        if (dir == NULL)
+            strcpy(file_path, szFileSpec);
+        else
+            snprintf(file_path, sizeof(file_path), "%s/%s", szFileSpec, file_name);
 
         if (stat(file_path, &st) == -1)
         {
             printf("stat(%s) failed.\n", file_path);
-            continue;
+            goto Loop_End;
         }
 
         if(st.st_mode & S_IFDIR) 
-            continue;
+            goto Loop_End;
 
 		t = gmtime((const time_t *)&st.st_mtime);
 
@@ -575,20 +583,20 @@ DWORD Put()
         FmtName(File.szName, File.szType, (strcmp(typeid(*gpOSI).name()+2, "CPM") ? "/" : "."), szFile);
 
         // Print the filenames
-        printf("%-12s/%-12s -> %-12s\t", szFileSpec, file_name, szFile);
+        printf("%-12s -> %-12s\t", file_path, szFile);
 
         // Check whether the file size is valid
         if (File.dwSize > MAX_FILE_SIZE )
         {
             puts("Invalid size!");
-            continue;
+            goto Loop_End;
         }
 
         // Open the Windows file
         if ( (hFile = fopen(file_path, "r")) == NULL)
         {
             printf("Can't open: %s\n", file_path);
-            continue;
+            goto Loop_End;
         }
 
 		dwBytes = fread(pBuffer, 1, File.dwSize, hFile);
@@ -598,7 +606,7 @@ DWORD Put()
 			fprintf(stderr,"Read error: %s - bytes read %d, expected %d \n", szFile, dwBytes,File.dwSize);
                         perror("Returned error ");
             fclose(hFile);
-            continue;
+            goto Loop_End;
         }
 
         // Close file handle
@@ -629,6 +637,10 @@ DWORD Put()
         wFiles++;
         dwSize += File.dwSize;
 
+Loop_End:
+        // if we are only adding a single file then stop
+        if (dir == NULL)
+            break;
     }
 
     // Print operation summary
